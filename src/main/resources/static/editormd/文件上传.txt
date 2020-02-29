@@ -1,0 +1,78 @@
+@Controller
+@RequestMapping("/file")
+public class FileUploadController {
+ 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileUploadController.class);
+ 
+ 
+    private  static final String IMAGE_URL_PRE ="http://access-usf.jd.com:8089/file/viewImage?key=";
+ 
+ 
+    @Resource
+    private MessageStoreService messageStoreService;
+ 
+    @ResponseBody
+    @RequestMapping("/uploadImage")
+    public String uploadImage(HttpSession session, @RequestParam(value = "editormd-image-file") MultipartFile file) {
+ 
+        LOGGER.info("========================上传图片开始=========================");
+        JSONObject res = new JSONObject();
+        try {
+            byte[] fileByte = file.getBytes();
+            String fileName = file.getOriginalFilename();
+            String key = messageStoreService.saveBytes(fileByte);
+ 
+            if(StringUtils.isNotEmpty(key)){
+                res.put("success", 1);
+                res.put("message", "上传成功");
+                res.put("url",IMAGE_URL_PRE+key);
+            } else {
+                res.put("success", 0);
+                res.put("message", "上传失败" );
+            }
+        } catch (Exception e) {
+            LOGGER.error("上传图片异常", e);
+            res.put("success", 0);
+            res.put("message", "上传异常");
+        }
+        LOGGER.info("上传图片返回结果：{}", res);
+        return res.toString();
+    }
+ 
+ 
+/**
+  在线预览图片
+*/
+    @RequestMapping("/viewImage")
+    @ResponseBody
+    public  void  viewImage(HttpServletRequest request, HttpServletResponse response, String key){
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        response.setContentType("text/html; charset=UTF-8");
+        response.setContentType("image/jpeg");
+        byte[] file = messageStoreService.loadBytes(key);
+        try {
+            os = response.getOutputStream();
+            os.write(file);
+            os.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (os != null){
+                try {
+                    os.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (bis != null){
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+ 
+        }
+    }
+}

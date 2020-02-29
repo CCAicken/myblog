@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myblog.dao.VForumDao">
+
+    <resultMap type="com.example.myblog.entity.VForum" id="VForumMap">
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userid" column="userid" jdbcType="INTEGER"/>
+        <result property="mdtext" column="mdtext" jdbcType="VARCHAR"/>
+        <result property="createtime" column="createtime" jdbcType="VARCHAR"/>
+        <result property="forumdescribe" column="forumdescribe" jdbcType="VARCHAR"/>
+        <result property="htmltext" column="htmltext" jdbcType="VARCHAR"/>
+        <result property="forumtypename" column="forumtypename" jdbcType="VARCHAR"/>
+        <result property="username" column="username" jdbcType="VARCHAR"/>
+        <result property="img" column="img" jdbcType="VARCHAR"/>
+        <result property="forumtype" column="forumtype" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="VForumMap">
+        select
+          title, id, userid, mdtext, createtime, forumdescribe, htmltext, forumtypename, username, img, forumtype
+        from myblog.v_forum
+        where id = #{id}
+    </select>
+    <!--根据文章类型查询文章-->
+    <select id="queryByForumType" resultMap="VForumMap">
+        select
+          title, id, userid, mdtext, createtime, forumdescribe, htmltext, forumtypename, username, img, forumtype
+        from myblog.v_forum
+        where  forumtype= #{forumtype}
+    </select>
+    <!--根据文章标题或简介查询文章-->
+    <select id="queryByTitleOrDescribe" resultMap="VForumMap">
+        select
+          title, id, userid, mdtext, createtime, forumdescribe, htmltext, forumtypename, username, img, forumtype
+        from myblog.v_forum
+        where title like CONCAT('%',#{strWhere},'%')   or forumdescribe like CONCAT('%',#{strWhere},'%')
+    </select>
+</mapper>

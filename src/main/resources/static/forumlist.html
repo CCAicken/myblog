@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aicken.文章列表</title>
+    <link rel="stylesheet" href="elementUI/thme-chalk/index.css">
+    <link rel="stylesheet" href="css/head.css">
+    <link rel="stylesheet" href="css/public.css">
+
+    <link rel="stylesheet" href="css/list.css">
+
+    <!-- import Vue before Element -->
+    <script src="elementUI/js/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="elementUI/js/index.js"></script>
+    <script src="elementUI/js/axios.min.js"></script>
+</head>
+
+<body>
+
+
+<div id="box">
+    <div>
+        <el-card class="box-card">
+            <el-row :gutter="20">
+
+                <el-col :span="16">
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" shadow="always" mode="horizontal"
+                             @select="handleSelect">
+                        <el-menu-item index="999">主页</el-menu-item>
+                        <template v-for="(obj,index) in headlist">
+                            <el-menu-item :index="obj.forumtype.toString()" :key="obj.forumtype">
+                                {{ obj.forumtypename }}
+                            </el-menu-item>
+                        </template>
+
+                    </el-menu>
+                </el-col>
+                <el-col :span="8" class="head_col">
+                    <el-input placeholder="请输入内容" v-model="searchtext" class="input-with-select">
+                        <el-button slot="append" @click="search()" icon="el-icon-search"></el-button>
+                    </el-input>
+                </el-col>
+            </el-row>
+        </el-card>
+    </div>
+    <div id="main">
+        <div class="daohang">
+            <el-card class="box-card">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                    <el-breadcrumb-item>文章列表页</el-breadcrumb-item>
+                </el-breadcrumb>
+            </el-card>
+        </div>
+        <div id="newforum">
+            <el-card class="box-card newforum_card">
+                <div slot="header" class="clearfix">
+                    <span>栏目最新文章</span>
+                </div>
+                <div v-for="obj in newforumlist" :key="obj.id" class="text newforum item">
+                    <el-tooltip class="item" effect="light" :content="obj.forumdescribe" placement="top">
+                        <a @click.prevent='toforuminfo(obj.id)' class="newforum_a">
+                            <el-row :gutter="20">
+                                <el-col :span="24">{{ obj.title }}</el-col>
+                                <el-col :span="24"><span id="forumtime">{{ obj.createtime }}</span></el-col>
+                            </el-row>
+                        </a>
+                    </el-tooltip>
+                    <el-divider content-position="left"></el-divider>
+                </div>
+            </el-card>
+        </div>
+        <div id="forumlist">
+            <el-row :gutter="20">
+                <el-col :span="6" class="dt_elcol"
+                        v-for="obj in mainlist"
+                        :key="obj.id">
+                    <a class="more_info" @click.prevent='toforuminfo(obj.id)'>
+                        <el-popover
+                                placement="top-start"
+                                :title="obj.title"
+                                width="200"
+                                trigger="hover"
+                                :content="obj.forumdescribe">
+                            <el-card :body-style="{ padding: '0px' }" slot="reference" shadow="hover">
+                                <img :src="obj.img" class="image">
+                                <div class="forumlist_card">
+                                    <div class="bottom clearfix">
+                                        <p class="time">{{ obj.title }}</p>
+                                    </div>
+                                </div>
+                            </el-card>
+                        </el-popover>
+                    </a>
+                </el-col>
+            </el-row>
+        </div>
+    </div>
+    <div id="footer">
+        <el-card class="box-card">
+            <span>Copyright@2019-2020 aicken.run All Rights Reserved.</span><br/>
+            <span>联系邮箱：mail@aicken.run</span>
+        </el-card>
+    </div>
+</div>
+</body>
+<script src="js/list.js"></script>
+</html>

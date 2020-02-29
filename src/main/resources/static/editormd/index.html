@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aicken.发布文章</title>
+    <link href="css/editormd.css" rel="stylesheet">
+    <link rel="stylesheet" href="../elementUI/thme-chalk/index.css">
+    <!-- import Vue before Element -->
+    <script src="../elementUI/js/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="../elementUI/js/index.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/editormd.js"></script>
+    <script src="js/uploadImg.js" type="text/javascript"></script>
+    <style>
+        .inputcss{
+
+            font-size:18px;
+            /* 设置输入框中字体的大小 */
+
+            height:40px;
+            /* 设置输入框的高度 */
+
+            border-radius:4px;
+            /* 设置输入框的圆角的大小 */
+
+            border:1px solid #c8cccf;
+            /* 设置输入框边框的粗细和颜色 */
+
+            color:#986655;
+            /* 设置输入框中文字的颜色 */
+
+            outline:0;
+            /* 将输入框点击的时候出现的边框去掉 */
+
+            text-align:left;
+            /* 设置输入框中文字的位置 */
+
+            padding-left: 10px;
+
+            display:block;
+            /* 将输入框设置为块级元素 */
+
+            cursor: pointer;
+
+            box-shadow: 2px 2px 5px 1px #ccc;
+
+            margin: 20px;
+            margin-left: 100px;
+            width: 50%;
+        }
+
+        input::-webkit-input-placeholder{
+            color: #986655;
+            font-size: 12px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div >
+    <div style=" margin-left: 100px;">
+        <p style="font-size:18px;margin-top:30px;color:rgba(0,0,0,0.44)">文章类型</p>
+        <label class="demo--label">
+            <input class="demo--radio" value="1" checked="checked" type="radio" name="forumtype">
+            <span class="demo--radioInput"></span>Java
+        </label>
+        <label class="demo--label">
+            <input class="demo--radio" value="2" type="radio" name="forumtype">
+            <span class="demo--radioInput"></span>JavaScript
+        </label>
+        <label class="demo--label">
+            <input class="demo--radio" value="3" type="radio" name="forumtype">
+            <span class="demo--radioInput"></span>.NTE
+        </label>
+    </div>
+    <style>
+        .demo--label{margin:20px 20px 0 0;display:inline-block}
+        .demo--radio{display:none}
+        .demo--radioInput{background-color:#fff;border:1px solid rgba(0,0,0,0.15);border-radius:100%;display:inline-block;height:16px;margin-right:10px;margin-top:-1px;vertical-align:middle;width:16px;line-height:1}
+        .demo--radio:checked + .demo--radioInput:after{background-color:#57ad68;border-radius:100%;content:"";display:inline-block;height:12px;margin:2px;width:12px}
+        .demo--checkbox.demo--radioInput,.demo--radio:checked + .demo--checkbox.demo--radioInput:after{border-radius:0}
+    </style>
+    <input id="title" class="inputcss" type="text" placeholder="请输入文章标题"/>
+    <input id="forumdescribe" class="inputcss" type="text" placeholder="请输入文章描述" />
+    <div id="test-editormd">
+        <textarea style="display:none;" class="form-control" id="content-editormd-markdown-doc" name="content-editormd-markdown-doc"></textarea>
+    </div>
+    <input type="button" class="inputcss" style="width: 70px;text-align: center"  value="提交" onclick="getmain()"></input>
+</div>
+</body>
+<script type="text/javascript">
+    var editor = editormd("test-editormd", {
+        width: "90%",
+        height: 720,
+        theme: "default",
+        path: "lib/",
+        saveHTMLToTextarea: true, // 保存 HTML 到 Textarea
+        toolbarAutoFixed: true, //工具栏自动固定定位的开启与禁用
+        imageUpload: true,
+        imageFormats: ["jpg", "jpeg", "gif", "png", "bmp", "webp"],
+        imageUploadURL: "../file/uploadfile",
+        emoji: true,
+        toolbarIcons: function () { //自定义工具栏，后面有详细介绍
+            return editormd.toolbarModes['full']; // full, simple, mini
+        },
+
+    });
+
+    function getmain() {
+        //testEditor.getMarkdown();       // 获取 Markdown 源码
+        //testEditor.getHTML();           // 获取 Textarea 保存的 HTML 源码
+        console.log(editor.getMarkdown())
+        console.log(editor.getHTML())
+        if($('input[name=forumtype]:checked').val()==null ||$('input[name=forumtype]:checked').val()==""){
+            alert("文章类型不能为空");
+            return;
+        }if ($("#title").val()==null || $("#title").val()==""){
+            alert("文章标题不能为空");
+            return;
+        }if (editor.getMarkdown()==null|| editor.getMarkdown()==""){
+            alert("文章内容不能为空");
+            return;
+        }if (editor.getHTML()==null || editor.getHTML()==""){
+            alert("文章内容不能为空");
+            return;
+        }if ($("#forumdescribe").val()==null || $("#forumdescribe").val()==""){
+            alert("文章描述不能为空");
+            return;
+        }
+        // 常用
+        $.ajax({
+            type:"post",
+            url:"../tForum/addTForum",
+            data:{
+                title:$("#title").val(),
+                userid: "123456",
+                mdtext: editor.getMarkdown(),
+                forumtype: item = $('input[name=forumtype]:checked').val(),
+                forumdescribe: $("#forumdescribe").val(),
+                htmltext: editor.getHTML()
+            },
+            dataType:"json",
+            success:function(data){
+                console.log(data)
+            }
+        })
+    }
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+.el-menu.el-menu--horizontal {
+    border: none;
+}
+.el-menu-item{
+    font-size: 20px;
+    font-weight: bold;
+}
+#box{
+    width: 80%;  margin: 0 auto;
+}
+#main{
+    background-color: #FFF; margin-top: 50px;
+}
+.time {
+    font-size: 16px;
+    line-height: 20px;
+    margin: 10px;
+}
+
+.bottom {
+    margin-top: 13px;
+    line-height: 12px;
+}
+
+.button {
+    padding: 0;
+    float: right;
+}
+
+.image {
+    width: 100%;
+    display: block;
+}
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}
+
+.dt_elcol {
+    margin-top: 15px;
+}

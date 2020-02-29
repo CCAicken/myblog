@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aicken.文章信息</title>
+    <link rel="stylesheet" href="elementUI/thme-chalk/index.css">
+    <link href="editormd/css/editormd.css" rel="stylesheet">
+    <link rel="stylesheet" href="editormd/css/editormd.preview.css"/>
+    <link rel="stylesheet" href="css/head.css">
+    <link rel="stylesheet" href="css/info.css">
+    <!-- import Vue before Element -->
+    <script src="elementUI/js/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="elementUI/js/index.js"></script>
+    <script src="elementUI/js/axios.min.js"></script>
+</head>
+
+<body>
+
+<div id="box">
+    <div id="info_box" >
+        <div id="head">
+            <el-card class="box-card">
+                <el-row :gutter="20">
+                    <el-col :span="16">
+                        <el-menu :default-active="activeIndex" class="el-menu-demo" shadow="always"
+                                 mode="horizontal"
+                                 @select="handleSelect">
+                            <el-menu-item index="999">主页</el-menu-item>
+                            <template v-for="(obj,index) in headlist">
+                                <el-menu-item :index="obj.forumtype.toString()" :key="obj.forumtype">
+                                    {{ obj.forumtypename }}
+                                </el-menu-item>
+                            </template>
+                        </el-menu>
+                    </el-col>
+                    <el-col :span="8" class="head_col">
+                        <el-input placeholder="请输入内容" v-model="searchtext" class="input-with-select">
+                            <el-button slot="append" @click="search()" icon="el-icon-search"></el-button>
+                        </el-input>
+                    </el-col>
+                </el-row>
+            </el-card>
+        </div>
+        <div id="info_main">
+            <div id="daohang" >
+                <el-card class="box-card">
+                    <el-breadcrumb separator="/">
+                        <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                        <el-breadcrumb-item><a href="forumlist.html">文章列表页</a></el-breadcrumb-item>
+                        <el-breadcrumb-item>文章详情页</el-breadcrumb-item>
+                    </el-breadcrumb>
+                </el-card>
+            </div>
+            <div id="info_main_newforum">
+                <el-card class="box-card" id="info_main_newforum_card">
+                    <div slot="header" class="clearfix">
+                        <span>最新文章</span>
+                    </div>
+
+                    <div v-for="obj in newforumlist" :key="obj.id" class="text newforum item">
+                        <el-tooltip class="item" effect="light" :content="obj.forumdescribe" placement="top">
+                            <a @click.prevent='toforuminfo(obj.id)' class="newforum_a">
+                                <el-row :gutter="20">
+                                    <el-col :span="24">{{ obj.title }}</el-col>
+                                    <el-col :span="24"><span id="forumtime">{{ obj.createtime }}</span></el-col>
+                                </el-row>
+                            </a>
+                        </el-tooltip>
+                        <el-divider content-position="left"></el-divider>
+                    </div>
+                </el-card>
+            </div>
+            <!--md内容-->
+            <div style="float:left; width:75%; margin-bottom: 15px">
+                <el-card class="box-card" style="text-align: center; margin-top: 5px;">
+                    <div id="test-editormd-view">
+                        <textarea id="append-test" style="display:none;"></textarea>
+                    </div>
+                </el-card>
+            </div>
+            <!--md内容end-->
+        </div>
+        <div id="footer">
+            <el-card class="box-card">
+                <span>Copyright@2019-2020 aicken.run All Rights Reserved.</span><br/>
+                <span>联系邮箱：mail@aicken.run</span>
+            </el-card>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!-- editor.md js -->
+<script src="editormd/js/jquery.min.js"></script>
+<script src="editormd/js/editormd.js"></script>
+<script src="editormd/lib/prettify.min.js"></script>
+<script src="editormd/lib/marked.min.js"></script>
+<script src="editormd/lib/raphael.min.js"></script>
+<script src="editormd/lib/underscore.min.js"></script>
+<script src="editormd/lib/sequence-diagram.min.js"></script>
+<script src="editormd/lib/flowchart.min.js"></script>
+<script src="editormd/lib/jquery.flowchart.min.js"></script>
+<script src="js/info.js"></script>
+</html>

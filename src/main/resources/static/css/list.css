@@ -1,0 +1,80 @@
+
+.el-menu.el-menu--horizontal {
+    border: none;
+}
+
+.my-autocomplete li {
+    line-height: normal;
+    padding: 7px;
+
+
+}
+
+.highlighted .addr {
+    color: #ddd;
+}
+
+.el-menu-item {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#forumtime {
+    margin-top: 10px;
+    font-size: 8px;
+    margin-bottom: -15px;
+    float: right;
+}
+
+/*中部内容*/
+#main {
+    height: 78%;
+    background-color: #FFF;
+    margin-top: 50px;
+}
+
+/*导航栏*/
+.daohang {
+    width: 100%;
+}
+/*最新文章*/
+#newforum{
+    width:25%; float:left;
+}
+#newforum > .newforum_card{
+    width: 96%;margin-top: 10px;
+}
+#newforum > .item{
+    font-size: 14px;   margin-bottom: 18px;
+}
+
+/*内容*/
+#main > #forumlist{
+    float:left; width:75%;
+}
+#main > #forumlist > .dt_elcol{
+    margin-top: 10px;margin-bottom: 15px;
+}
+#main > #forumlist > .dt_elcol > .forumlist_card{
+    padding: 14px;
+    text-align: center;
+}
+.forumlist_card{
+    padding: 14px;
+    text-align: center;
+}
+#footer{
+    text-align: center; margin-top: 15px;
+}
+
+.newforum_a{
+    color: #303133;
+}
+.newforum_a:hover{
+    color: #909399;
+    cursor: pointer;
+}
+.more_info:hover{
+    color: #909399;
+    cursor: pointer;
+}

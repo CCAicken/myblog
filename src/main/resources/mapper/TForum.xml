@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.myblog.dao.TForumDao">
+
+    <resultMap type="com.example.myblog.entity.TForum" id="TForumMap">
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userid" column="userid" jdbcType="INTEGER"/>
+        <result property="mdtext" column="mdtext" jdbcType="VARCHAR"/>
+        <result property="forumtype" column="forumtype" jdbcType="INTEGER"/>
+        <result property="createtime" column="createtime" jdbcType="VARCHAR"/>
+        <result property="forumdescribe" column="forumdescribe" jdbcType="VARCHAR"/>
+        <result property="htmltext" column="htmltext" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TForumMap">
+        select
+          title, id, userid, mdtext, forumtype, createtime, forumdescribe, htmltext
+        from myblog.t_forum
+        where id = #{id}
+    </select>
+    <!--根据文章类型获取文章列表-->
+    <select id="getforumbytype" resultMap="TForumMap">
+        select
+        title, id, userid, mdtext, forumtype, createtime, forumdescribe, htmltext
+        from myblog.t_forum
+        where forumtype = #{forumtype}
+    </select>
+    <!--根据文章类型获取最新前15的文章-->
+    <select id="queryNewTop" resultMap="TForumMap">
+        select id, title, forumdescribe ,createtime
+        from myblog.t_forum where forumtype=#{forumtype}
+        ORDER BY createtime desc
+        LIMIT 0,15
+    </select>
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into myblog.t_forum(title, userid, mdtext, forumtype, forumdescribe, htmltext)
+        values (#{title}, #{userid}, #{mdtext}, #{forumtype}, #{forumdescribe}, #{htmltext})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update myblog.t_forum
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="userid != null">
+                userid = #{userid},
+            </if>
+            <if test="mdtext != null and mdtext != ''">
+                mdtext = #{mdtext},
+            </if>
+            <if test="forumtype != null">
+                forumtype = #{forumtype},
+            </if>
+            <if test="createtime != null and createtime != ''">
+                createtime = #{createtime},
+            </if>
+            <if test="forumdescribe != null and forumdescribe != ''">
+                forumdescribe = #{forumdescribe},
+            </if>
+            <if test="htmltext != null and htmltext != ''">
+                htmltext = #{htmltext},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+  
+
+</mapper>

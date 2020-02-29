@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Aicken.搜索</title>
+    <link rel="stylesheet" href="elementUI/thme-chalk/index.css">
+    <link rel="stylesheet" href="css/head.css">
+
+    <link rel="stylesheet" href="css/search.css">
+    <!-- import Vue before Element -->
+    <script src="elementUI/js/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="elementUI/js/index.js"></script>
+    <script src="elementUI/js/axios.min.js"></script>
+</head>
+
+<body>
+<div id="box">
+    <div id="head">
+        <el-card class="box-card">
+            <el-row :gutter="20">
+                <el-col :span="16">
+                    <el-menu :default-active="activeIndex" class="el-menu-demo" shadow="always" mode="horizontal"
+                             @select="handleSelect">
+                        <el-menu-item index="999">主页</el-menu-item>
+                        <template v-for="(obj,index) in headlist">
+                            <el-menu-item :index="obj.forumtype.toString()" :key="obj.forumtype">
+                                {{ obj.forumtypename }}
+                            </el-menu-item>
+                        </template>
+
+                    </el-menu>
+                </el-col>
+                <el-col :span="8" class="head_col">
+                    <el-input placeholder="请输入内容" v-model="searchtext" class="input-with-select">
+                        <el-button slot="append" @click="search()" icon="el-icon-search"></el-button>
+                    </el-input>
+                </el-col>
+            </el-row>
+        </el-card>
+    </div>
+    <div id="main">
+        <div id="daohang">
+            <el-card class="box-card">
+                <el-breadcrumb separator="/">
+                    <el-breadcrumb-item><a href="index.html">首页</a></el-breadcrumb-item>
+                    <el-breadcrumb-item>搜索</el-breadcrumb-item>
+                </el-breadcrumb>
+            </el-card>
+        </div>
+        <el-row :gutter="20" style="margin-top: 15px">
+            <el-col :span="24" v-if="mainlist.length<1">
+                <el-alert
+                        title="tips"
+                        type="info"
+                        show-icon
+                        description="暂无的相关文章">
+                </el-alert>
+                <span></span>
+            </el-col>
+            <el-col :span="6" class="dt_elcol"
+                    v-for="obj in mainlist"
+                    :key="obj.id">
+                <a class="more_info" @click.prevent='toforuminfo(obj.id)'>
+
+                    <el-card :body-style="{ padding: '0px' }" shadow="hover">
+                        <img :src="obj.img" class="image">
+                        <div class="forumlist_card">
+                            <div class="bottom clearfix">
+                                <p class="time">{{ obj.title }}</p>
+                                <p class="time">{{ obj.forumdescribe }}</p>
+                            </div>
+                        </div>
+                    </el-card>
+                </a>
+            </el-col>
+        </el-row>
+    </div>
+
+    <div id="footer">
+        <el-card class="box-card">
+            <span>Copyright@2019-2020 aicken.run All Rights Reserved.</span><br/>
+            <span>联系邮箱：mail@aicken.run</span>
+        </el-card>
+    </div>
+</div>
+</body>
+<script src="js/search.js"></script>
+</html>

@@ -1,0 +1,13 @@
+html{
+    height: 100%;
+}
+body ,#box{
+    height: 98%;
+}
+
+#head{
+    height: 60px;
+}
+.head_col{
+    margin-top: 15px;
+}

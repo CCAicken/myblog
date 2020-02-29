@@ -1,0 +1,72 @@
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+    line-height: 260px;
+}
+
+.el-menu.el-menu--horizontal {
+    border: none;
+}
+
+.el-container:nth-child(7) .el-aside {
+    line-height: 320px;
+}
+
+
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+
+.clearfix:after {
+    clear: both
+}
+
+.my-autocomplete li {
+    line-height: normal;
+    padding: 7px;
+}
+
+.highlighted .addr {
+    color: #ddd;
+}
+
+.el-menu-item {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+#info_box {
+    width: 90%;
+    margin: 0 auto;
+}
+
+#info_box > #info_main {
+    height: auto;
+    background-color: #FFF;
+    margin-top: 50px;
+}
+
+#info_box > #info_main > #daohang {
+    width: 100%;
+}
+
+#info_box > #info_main > #info_main_newforum {
+    width: 25%;
+    float: left;
+}
+
+#info_box > #info_main > #info_main_newforum > #info_main_newforum_card {
+    width: 96%;
+    margin-top: 5px;
+}
+
+#info_box > #info_main > #info_main_newforum > #info_main_newforum_card > .item {
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+#footer{
+    text-align: center; margin-top: 15px;
+}
